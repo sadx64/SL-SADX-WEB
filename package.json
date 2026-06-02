@@ -1,0 +1,50 @@
+{
+  "name": "netflix-clone",
+  "private": true,
+  "version": "3.7.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "vite build",
+    "lint": "tsc --noEmit",
+    "build:prod": "node scripts/build-production.js",
+    "preview": "vite preview",
+    "start": "npm run build && node server.js",
+    "server": "node server.js",
+    "production": "npm run build:prod && node server.js",
+    "test:perf": "node scripts/performance-test.js",
+    "test:security": "npm run build:prod && npm run test:perf"
+  },
+  "engines": {
+    "node": "20.x"
+  },
+  "dependencies": {
+    "@types/react-lazy-load-image-component": "^1.6.5",
+    "compression": "^1.8.1",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.5.2",
+    "helmet": "^8.2.0",
+    "hls.js": "^1.5.0",
+    "lucide-react": "^0.300.0",
+    "node-cache": "^5.1.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-lazy-load-image-component": "^1.6.3",
+    "react-router-dom": "^6.22.0",
+    "socket.io": "^4.8.3",
+    "tslint": "^5.20.1"
+  },
+  "devDependencies": {
+    "@rollup/plugin-terser": "^1.0.0",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.2.0",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.0",
+    "terser": "^5.27.0",
+    "typescript": "^5.2.0",
+    "vite": "^5.0.0"
+  }
+}

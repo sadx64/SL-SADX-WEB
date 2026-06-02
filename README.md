@@ -1,11 +1,23 @@
-<div align="center">
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+# Streaming Web App
 
-  <h1>Built with AI Studio</h2>
+This is a premium React + Vite + Express streaming application. 
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+## Features
+- **Frontend**: React 18 + Tailwind CSS + Vite, designed with a mobile-first premium UI.
+- **Backend**: Node/Express server serves static assets and proxies streaming APIs.
+- **PWA/Offline**: Includes Service Worker logic to detect offline states and show a connectivity banner.
+- **Security**: Rate limiting, CSP, source file blocking.
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+## Local Development
+```
+npm install
+npm run dev
+```
 
-</div>
+## Production Build
+```
+npm run build
+npm start
+```
+
