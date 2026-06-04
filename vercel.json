@@ -9,10 +9,6 @@
     { "source": "/_i18n/:path*", "destination": "/api/server-entrypoint" },
     { "source": "/manifest.webmanifest", "destination": "/api/server-entrypoint" },
     { "source": "/sitemap.xml", "destination": "/api/server-entrypoint" },
-    { "source": "/watch", "destination": "/index.html" },
-    { "source": "/trailer", "destination": "/index.html" },
-    { "source": "/toplist", "destination": "/index.html" },
-    { "source": "/movie/:path*", "destination": "/index.html" },
-    { "source": "/tv/:path*", "destination": "/index.html" }
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
