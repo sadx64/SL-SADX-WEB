@@ -143,11 +143,9 @@ const getYoutubeId = (url: string): string | null => {
 const FastStreamLoader: React.FC<{ buffered?: number }> = ({ buffered }) => {
   return (
     <div className="flex flex-col items-center p-8">
-      {}
       <div className="relative">
         <div className="w-20 h-20 border-4 border-white/20 rounded-full animate-spin border-t-primary"></div>
         <div className="absolute inset-0 w-20 h-20 border-4 border-transparent rounded-full bg-gradient-to-r from-primary/20 to-transparent animate-spin-slow border-l-primary"></div>
-        {}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-8 h-8 bg-gradient-to-br from-primary to-blue-500 rounded-full flex items-center justify-center shadow-lg">
             <svg className="w-5 h-5 text-black animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -158,20 +156,15 @@ const FastStreamLoader: React.FC<{ buffered?: number }> = ({ buffered }) => {
         </div>
       </div>
       
-      {}
       <div className="w-80 mt-8 mx-auto">
         <div className="relative h-3 bg-white/10 rounded-2xl overflow-hidden shadow-lg">
-          {}
           <div className="absolute inset-0 bg-gradient-to-r from-gray-800/50 to-white/20 rounded-2xl"></div>
-          {}
           <div 
             className="h-full bg-gradient-to-r from-primary via-blue-500 to-indigo-500 rounded-2xl relative shadow-primary/50 overflow-hidden transition-all duration-500 ease-out"
             style={{ width: `${Math.min((buffered || 0) * 100, 100)}%` }}
           >
-            {}
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform translate-x-[-100%] animate-shimmer-smooth"></div>
           </div>
-          {}
           {(buffered || 0) > 0 && (
             <div 
               className="absolute right-0 top-0 h-full w-1 bg-white/50 rounded-r-lg shadow-lg"
@@ -182,7 +175,6 @@ const FastStreamLoader: React.FC<{ buffered?: number }> = ({ buffered }) => {
       </div>
 
       
-      {}
       <div className="mt-4 text-center">
         <div className="flex items-center justify-center gap-2 mb-1">
           <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse-fast"></div>
@@ -192,7 +184,7 @@ const FastStreamLoader: React.FC<{ buffered?: number }> = ({ buffered }) => {
         <span className="text-white/80 text-sm font-medium tracking-wide">Loading Stream</span>
         {buffered && buffered > 0 && (
           <span className="text-primary/80 text-xs mt-1 block font-mono">
-            {Math.round((buffered || 0) * 100)}% buffered
+             {Math.round((buffered || 0) * 100)}% buffered
           </span>
         )}
       </div>
@@ -297,11 +289,11 @@ const StreamingPlayer: React.FC<VideoPlayerProps> = ({
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [resizeMode, setResizeMode] = useState<'contain' | 'cover'>('contain');
   const [activeSourceIndex, setActiveSourceIndex] = useState(() => {
-    const saved = localStorage.getItem('netflix_preferred_quality');
+    const saved = localStorage.getItem('slflix_preferred_quality');
     return 0; 
   });
   const [preferredQuality, setPreferredQuality] = useState(() => {
-    return localStorage.getItem('netflix_preferred_quality') || 'Auto';
+    return localStorage.getItem('slflix_preferred_quality') || 'Auto';
   });
   const [activeSubtitle, setActiveSubtitle] = useState<number>(-1);
   const [volume, setVolume] = useState(1);
@@ -317,7 +309,6 @@ const StreamingPlayer: React.FC<VideoPlayerProps> = ({
   const [countdown, setCountdown] = useState(5);
   const [showReconnected, setShowReconnected] = useState(false);
 
-  // Keyboard and on-screen control visual jump indicator
   const [jumpIndicator, setJumpIndicator] = useState<{ type: 'forward' | 'backward' | 'play' | 'pause'; visible: boolean; text?: string } | null>(null);
   const jumpTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -481,7 +472,7 @@ const StreamingPlayer: React.FC<VideoPlayerProps> = ({
     
     if (source.quality) {
       setPreferredQuality(String(source.quality));
-      localStorage.setItem('netflix_preferred_quality', String(source.quality));
+      localStorage.setItem('slflix_preferred_quality', String(source.quality));
     }
     
     
@@ -806,7 +797,6 @@ const StreamingPlayer: React.FC<VideoPlayerProps> = ({
         </div>
       )}
 
-      {/* Keyboard and Controls Visual Feedback Overlay */}
       {jumpIndicator && jumpIndicator.visible && (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[100] animate-fade-in">
           <div className="flex flex-col items-center justify-center gap-2 bg-black/75 backdrop-blur-md border border-primary/30 w-24 h-24 md:w-28 md:h-28 rounded-full shadow-[0_0_25px_rgba(0,229,255,0.4)] transform scale-100 animate-[bounce_1s_infinite] select-none">
@@ -928,7 +918,6 @@ const StreamingPlayer: React.FC<VideoPlayerProps> = ({
               </div>
             </div>
 
-            {/* Audio / Dubs */}
             {movie?.dubs && movie.dubs.length > 1 && (
               <div className="mb-4">
                 <p className="text-gray-400 text-xs uppercase mb-2 flex items-center gap-2">

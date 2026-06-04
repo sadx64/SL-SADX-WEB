@@ -4,7 +4,7 @@ import { safeConsole } from '../utils/productionGuard';
 
 
 
-const VIRTUAL_API_PATH = "/netflix/api/v1";
+const VIRTUAL_API_PATH = "/slflix/api/v1";
 
 
 const convertSrtToVtt = (srtContent: string): string => {
@@ -318,7 +318,7 @@ export const ApiService = {
             try {
                 const res = await fetch(omegatechUrl);
                 const data = await res.json();
-                console.log('[Netflix] Dixon Omega search response:', data);
+                console.log('[SL-FLIX] Dixon Omega search response:', data);
                 if (data && data.success && Array.isArray(data.result)) {
                     const results: MovieResult[] = data.result.map((item: any) => ({
                         title: item.title || "Unknown",
@@ -347,7 +347,7 @@ export const ApiService = {
                     return result;
                 }
             } catch (err) {
-                console.warn('[Netflix] Dixon Omega search failed, trying fallback:', err);
+                console.warn('[SL-FLIX] Dixon Omega search failed, trying fallback:', err);
             }
 
             // Priority 2: Metadata-based search (Fallback)
@@ -355,7 +355,7 @@ export const ApiService = {
             let result = null;
             try {
                 const metaData = await fetchJson(metaUrl);
-                console.log('[Netflix] Metadata search response:', metaData);
+                console.log('[SL-FLIX] Metadata search response:', metaData);
                 const items = metaData.data?.searchResults || metaData.data?.subjectList || metaData.data?.items || metaData.data?.list;
                 if (metaData.code === 0 && Array.isArray(items)) {
                     const pager = metaData.data?.pager || {};
@@ -367,7 +367,7 @@ export const ApiService = {
                     };
                 }
             } catch (err) {
-                console.warn('[Netflix] Metadata search failed, falling back to Cineverse:', err);
+                console.warn('[SL-FLIX] Metadata search failed, falling back to Cineverse:', err);
             }
 
             if (result) {
@@ -381,7 +381,7 @@ export const ApiService = {
             const url = `/api-cineverse/api/search?q=${encodeURIComponent(query.trim())}&page=${page}&perPage=24`;
             const data = await fetchJson(url);
             
-            console.log('[Netflix] Cineverse search response:', data);
+            console.log('[SL-FLIX] Cineverse search response:', data);
             
             if (data.success && data.results?.items) {
                 const pager = data.results.pager || {};
@@ -401,7 +401,7 @@ export const ApiService = {
             
             return { results: [], hasMore: false, nextPage: 1, totalCount: 0 };
         } catch (e) {
-            console.error('[Netflix] Search error:', e);
+            console.error('[SL-FLIX] Search error:', e);
             
             const cached = cacheService.get<{ results: MovieResult[]; hasMore: boolean; nextPage: number; totalCount: number }>(cacheKey);
             if (cached && cached.data) {
@@ -461,7 +461,7 @@ export const ApiService = {
             
             return result;
         } catch (e) {
-            console.error('[Netflix] Home data error:', e);
+            console.error('[SL-FLIX] Home data error:', e);
             
             
             const cached = cacheService.get<{ categories: CategoryData[]; hero: MovieResult[] }>(cacheKey);
@@ -514,7 +514,7 @@ export const ApiService = {
                     
                     if (d.resource?.seasons && Array.isArray(d.resource.seasons)) {
                         seasons = d.resource.seasons;
-                        console.log('[Netflix] Seasons from d.resource.seasons:', seasons);
+                        console.log('[SL-FLIX] Seasons from d.resource.seasons:', seasons);
                     }
                     
                     else if (s.resource?.seasons && Array.isArray(s.resource.seasons)) {
@@ -557,7 +557,7 @@ export const ApiService = {
                             seasonNumber: se.seasonNumber || se.se || 1, 
                             episodeCount: se.maxEp || se.episodeCount || se.totalEpisodes || 12 
                         }));
-                        console.log('[Netflix] Seasons extracted:', enhanced.seasons);
+                        console.log('[SL-FLIX] Seasons extracted:', enhanced.seasons);
                     } else if (s.type === 'TV Series' || s.subjectType === 2 || s.category === 'Series') {
                         enhanced.seasons = [{ seasonNumber: 1, episodeCount: s.episodeCount || s.totalEpisodes || 12 }];
                     }
@@ -569,7 +569,7 @@ export const ApiService = {
                     cacheService.set(cacheKey, enhanced, 10 * 60 * 1000);
                 }
             } catch (e) {
-                console.warn("[Netflix] Detail metadata failed", e);
+                console.warn("[SL-FLIX] Detail metadata failed", e);
             }
         }
         
@@ -582,7 +582,7 @@ export const ApiService = {
                     enhanced.recommendations = recItems.map(normalizeItem);
                 }
             } catch (e) {
-                console.warn("[Netflix] Recommendations failed", e);
+                console.warn("[SL-FLIX] Recommendations failed", e);
             }
         }
         
@@ -605,13 +605,13 @@ export const ApiService = {
                 url += `&path=${encodeURIComponent(detailPath)}`;
             }
             
-            console.log('[Netflix] Getting sources from:', url);
+            console.log('[SL-FLIX] Getting sources from:', url);
             const data = await fetchWithRetry(
                 () => fetchJson(url),
                 10, 3000
             );
             
-            console.log('[Netflix] Sources response:', data);
+            console.log('[SL-FLIX] Sources response:', data);
             
             if (data.results && data.results.length > 0) {
                 const videos: VideoSource[] = data.results.map((r: any) => {
@@ -647,7 +647,7 @@ export const ApiService = {
                     url: s.url
                 }));
 
-                console.log('[Netflix] Sources found:', videos.length, 'subs:', subs.length);
+                console.log('[SL-FLIX] Sources found:', videos.length, 'subs:', subs.length);
                 
                 const result = { videos, subs };
                 
@@ -657,10 +657,10 @@ export const ApiService = {
                 return result;
             }
             
-            console.warn('[Netflix] No sources found');
+            console.warn('[SL-FLIX] No sources found');
             return { videos: [], subs: [] };
         } catch (e) {
-            console.error("[Netflix] Sources fetch failed", e);
+            console.error("[SL-FLIX] Sources fetch failed", e);
             
             
             const cached = cacheService.get<{ videos: VideoSource[]; subs: Subtitle[] }>(cacheKey);
@@ -747,7 +747,7 @@ export const ApiService = {
             
             return { title: category, results: [], hasMore: false, nextPage: page + 1 };
         } catch (e) {
-            console.error('[Netflix] Ranking list error:', e);
+            console.error('[SL-FLIX] Ranking list error:', e);
             return { title: category, results: [], hasMore: false, nextPage: page + 1 };
         }
     },

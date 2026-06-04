@@ -212,7 +212,7 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
 
   const loadProgress = () => {
     if (movieId) {
-      const key = `netflix_progress_${movieId}`;
+      const key = `slflix_progress_${movieId}`;
       const stored = localStorage.getItem(key);
       if (stored) {
         try {
@@ -224,8 +224,8 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
 
   useEffect(() => {
     loadProgress();
-    window.addEventListener('netflix_progress_update', loadProgress);
-    return () => window.removeEventListener('netflix_progress_update', loadProgress);
+    window.addEventListener('slflix_progress_update', loadProgress);
+    return () => window.removeEventListener('slflix_progress_update', loadProgress);
   }, [movieId]);
 
   

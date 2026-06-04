@@ -54,7 +54,7 @@ const SeasonSelector: React.FC<SeasonSelectorProps> = ({
 
   const loadProgress = () => {
     if (movie.subjectId || movie.detailPath) {
-      const key = `netflix_progress_${movie.subjectId || movie.detailPath}`;
+      const key = `slflix_progress_${movie.subjectId || movie.detailPath}`;
       const stored = localStorage.getItem(key);
       if (stored) {
         try {
@@ -66,8 +66,8 @@ const SeasonSelector: React.FC<SeasonSelectorProps> = ({
 
   useEffect(() => {
     loadProgress();
-    window.addEventListener('netflix_progress_update', loadProgress);
-    return () => window.removeEventListener('netflix_progress_update', loadProgress);
+    window.addEventListener('slflix_progress_update', loadProgress);
+    return () => window.removeEventListener('slflix_progress_update', loadProgress);
   }, [movie.subjectId, movie.detailPath]);
 
   

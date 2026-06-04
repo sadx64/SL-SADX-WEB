@@ -549,7 +549,7 @@ const DetailsView: React.FC<{
 
     const loadProgress = () => {
         if (movie.subjectId) {
-            const key = `netflix_progress_${movie.subjectId}`;
+            const key = `slflix_progress_${movie.subjectId}`;
             const stored = localStorage.getItem(key);
             if (stored) {
                 try {
@@ -561,8 +561,8 @@ const DetailsView: React.FC<{
 
     useEffect(() => {
         loadProgress();
-        window.addEventListener('netflix_progress_update', loadProgress);
-        return () => window.removeEventListener('netflix_progress_update', loadProgress);
+        window.addEventListener('slflix_progress_update', loadProgress);
+        return () => window.removeEventListener('slflix_progress_update', loadProgress);
     }, [movie.subjectId]);
 
     const showToast = (message: string) => {
@@ -1075,7 +1075,7 @@ const App: React.FC = () => {
             const progress = (time / duration) * 100;
             const isCompleted = progress > 90;
             
-            const key = `netflix_progress_${playerState.subjectId}`;
+            const key = `slflix_progress_${playerState.subjectId}`;
             const stored = localStorage.getItem(key);
             const data = stored ? JSON.parse(stored) : {};
             
@@ -1088,7 +1088,7 @@ const App: React.FC = () => {
             };
             
             localStorage.setItem(key, JSON.stringify(data));
-            window.dispatchEvent(new Event('netflix_progress_update'));
+            window.dispatchEvent(new Event('slflix_progress_update'));
         }
     };
 
