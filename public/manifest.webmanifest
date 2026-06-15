@@ -1,13 +1,13 @@
 {
-    "name": "Netflix",
-    "short_name": "Netflix",
+    "name": "Sl-flix",
+    "short_name": "Sl-flix",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#101114",
     "lang": "en",
     "scope": "/",
     "id": "slflix",
-    "description": "Netflix - Stream Movies & TV Shows Free",
+    "description": "Sl-flix - Stream Movies & TV Shows Free",
     "theme_color": "#E50914",
     "icons": [
         {
